@@ -14,7 +14,6 @@ import {
   Bot,
   Terminal,
   Server,
-  Coffee,
   Workflow,
   Instagram,
 } from 'lucide-react';
@@ -59,7 +58,6 @@ export const TECH_STACK = [
       { name: "JavaScript", icon: Code2 },
       { name: "TypeScript", icon: Terminal },
       { name: "Python", icon: Bot },
-      { name: "Java", icon: Coffee }
     ]
   },
   {
@@ -117,25 +115,13 @@ export const TECH_STACK = [
 ];
 
 export const PROJECTS = [
-  {
-    id: 7,
-    title: "Coiffure M-va Salon",
-    category: "Professional",
-    description: "Modern salon management and online booking platform for premium hairstyling services.",
-    tech: ["React", "Tailwind CSS", "Node.js", "Firebase"],
-    image: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&q=80&w=800",
-    features: ["Online Booking", "Service Catalog", "Stylist Management"],
-    problem: "Modernizing customer bookings and service discovery for local businesses.",
-    architecture: "React frontend with Firebase for real-time data and authentication.",
-    github: "https://github.com/alamayub/coiffure_m-va_salon",
-    live: "https://coiffuremeva.pages.dev/"
-  },
+  
   {
     id: 6,
     title: "LinkWise AI",
     category: "Personal",
     description: "Intelligence extraction engine for target websites using LLM-powered context parsing.",
-    tech: ["TypeScript", "Gemini AI", "React", "Node.js"],
+    tech: ["TypeScript", "Gemini AI", "React", "Tailwind CSS"],
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
     features: ["URL Analysis", "Context-Aware Chat", "Market Analysis"],
     problem: "Extracting meaningful business intelligence from cluttered web content.",
@@ -144,43 +130,31 @@ export const PROJECTS = [
     live: "https://linkwiseai.pages.dev/"
   },
   {
-    id: 1,
-    title: "WeAreKids",
+    id: 7,
+    title: "Coiffure M-va Salon",
     category: "Professional",
-    description: "Comprehensive school platform with role-based dashboards for Admin, Student, Teacher, and Principal users.",
-    tech: ["MySQL", "Node.js", "Express", "React"],
-    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800",
-    features: ["Role-based Access", "Admin Dashboards", "Student Workflows"],
-    problem: "Coordinating multi-stakeholder school operations within a single unified platform.",
-    architecture: "Monolithic modular backend with specialized frontend role modules.",
-    github: "#",
-    live: "https://wearekids.in/"
+    description: "Modern salon management and online booking platform for premium hairstyling services.",
+    tech: ["React", "Tailwind CSS", "Node.js", "Gemini AI", "Firebase Auth"],
+    image: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&q=80&w=800",
+    features: ["Online Booking", "Service Catalog", "Stylist Management"],
+    problem: "Modernizing customer bookings and service discovery for local businesses.",
+    architecture: "React frontend with Firebase for real-time data and authentication.",
+    github: "https://github.com/alamayub/coiffure_m-va_salon",
+    live: "https://coiffuremeva.pages.dev/"
   },
+  
   {
     id: 2,
     title: "Pulkiss",
     category: "Personal",
     description: "Real-time synced video room with chat, groups, and Firebase-based moderation.",
-    tech: ["Express", "Socket.IO", "React", "WebRTC"],
+    tech: ["Node.js", "Express", "Socket.IO", "React", "WebRTC", "Firebase Auth"],
     image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800",
     features: ["Synced YouTube", "Video Chat", "Admin Moderation"],
     problem: "Real-time synchronization of media playback across multiple clients with low latency.",
     architecture: "Stateful Socket.IO servers with in-memory group management.",
     github: "https://github.com/alamayub/pulkiss",
     live: "https://pulkiss-app.onrender.com/"
-  },
-  {
-    id: 3,
-    title: "Toeato Ecosystem",
-    category: "Professional",
-    description: "Multi-app food delivery monorepo spanning customer, admin, delivery, and restaurant apps.",
-    tech: ["Flutter", "Node.js", "Socket.IO", "Firebase"],
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800",
-    features: ["Live Tracking", "Partner Management", "Real-time Notifications"],
-    problem: "Scaling a 4-sided marketplace with high-velocity data and real-time state sync.",
-    architecture: "Monorepo structure with shared packages and event-driven backend.",
-    github: "https://github.com/alamayub/",
-    live: "https://toeato.com/"
   },
   {
     id: 4,
@@ -197,10 +171,10 @@ export const PROJECTS = [
   },
   {
     id: 5,
-    title: "Ride App Monorepo",
+    title: "Ride App",
     category: "Professional",
     description: "Uber-style ride-hailing platform with OTP-gated ride lifecycle and KYC.",
-    tech: ["Node.js", "Socket.IO", "MySQL", "Flutter"],
+    tech: ["Node.js", "Socket.IO", "MySQL", "Flutter", "React"],
     image: "https://images.unsplash.com/photo-1593950315186-76a92975b60c?auto=format&fit=crop&q=80&w=800",
     features: ["Ride Lifecycle", "KYC Systems", "Redis Caching"],
     problem: "Managing complex transactional states for rides while ensuring safety and speed.",
@@ -209,11 +183,37 @@ export const PROJECTS = [
     live: "#"
   },
   {
+    id: 1,
+    title: "WeAreKids",
+    category: "Professional",
+    description: "Comprehensive school platform with role-based dashboards for Admin, Student, Teacher, and Principal users.",
+    tech: ["MySQL", "Node.js", "Express", "React", "Flutter", "Firebase"],
+    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800",
+    features: ["Role-based Access", "Admin Dashboards", "Student Workflows"],
+    problem: "Coordinating multi-stakeholder school operations within a single unified platform.",
+    architecture: "Monolithic modular backend with specialized frontend role modules.",
+    github: "#",
+    live: "https://wearekids.in/"
+  },
+  {
+    id: 3,
+    title: "Toeato",
+    category: "Professional",
+    description: "Multi-app food delivery monorepo spanning customer, admin, delivery, and restaurant apps.",
+    tech: ["Flutter", "Dart", "Express", "Node.js", "Socket.IO", "Firebase", "Firestore"],
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800",
+    features: ["Live Tracking", "Partner Management", "Real-time Notifications"],
+    problem: "Scaling a 4-sided marketplace with high-velocity data and real-time state sync.",
+    architecture: "Monorepo structure with shared packages and event-driven backend.",
+    github: "https://github.com/alamayub/",
+    live: "https://toeato.com/"
+  },
+  {
     id: 8,
     title: "Nepal Health Sewa",
     category: "Professional",
     description: "Event-driven donor registry and campaign platform with real-time notifications.",
-    tech: ["Vue.js", "Node.js", "Firestore", "Firebase Auth"],
+    tech: ["Vue.js", "Vuex", "Vuetify", "Node.js", "Firestore", "Firebase Auth"],
     image: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&q=80&w=800",
     features: ["Donor Registry", "Campaign Management", "Real-time Alerts"],
     problem: "Coordinating blood donation campaigns and health registries efficiently.",
