@@ -46,7 +46,7 @@ export function GithubStats() {
           </div>
         </div>
 
-        <div className="overflow-x-auto pb-4 custom-scrollbar">
+        <div className="overflow-x-auto pb-4">
           <div className="min-w-[800px] flex justify-center">
             <GitHubCalendar 
               username={username}

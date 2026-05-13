@@ -70,15 +70,18 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
-  .custom-scrollbar::-webkit-scrollbar {
-    height: 6px;
+  /* Global hidden scrollbars but keep scrolling */
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-neutral-100 dark:bg-neutral-800 rounded-full;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-neutral-300 dark:bg-neutral-700 rounded-full hover:bg-neutral-400 dark:hover:bg-neutral-600;
+  *::-webkit-scrollbar {
+    display: none;
   }
 }
 

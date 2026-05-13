@@ -1,7 +1,3 @@
-/* eslint-disable react-hooks/immutability */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquare, X, Send, Bot } from 'lucide-react';
@@ -90,7 +86,7 @@ export function ChatBot() {
   return (
     <>
       {/* Floating Button */}
-      <div className="fixed bottom-8 right-8 z-[100]">
+      <div className="fixed bottom-8 right-8 z-[40]">
         <AnimatePresence>
           {hasNewMessage && !isOpen && (
             <motion.div
@@ -123,7 +119,7 @@ export function ChatBot() {
             animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: 100, scale: 0.8, filter: 'blur(10px)' }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed bottom-28 right-8 z-[100] w-[calc(100%-4rem)] sm:w-[420px] h-[600px] glass overflow-hidden rounded-[2.5rem] flex flex-col shadow-3xl border-transparent"
+            className="fixed bottom-28 right-8 z-[40] w-[calc(100%-4rem)] sm:w-[420px] h-[600px] glass overflow-hidden rounded-[2.5rem] flex flex-col shadow-3xl border-transparent"
           >
             {/* Header */}
             <div className="p-8 pb-6 bg-neutral-900 dark:bg-neutral-950 flex items-center justify-between relative overflow-hidden">
