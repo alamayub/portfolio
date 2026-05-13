@@ -26,7 +26,7 @@ export const PERSONAL_INFO = {
   location: "Bengaluru, India",
   email: "alamayub85@gmail.com",
   // avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
-  avatar: "https://drive.google.com/file/d/1jmMCbuTtOGjgeHlpqpLh2kd8GpxQGunp/view?usp=sharing",
+  avatar: "https://drive.usercontent.google.com/download?id=1jmMCbuTtOGjgeHlpqpLh2kd8GpxQGunp&export=view",
   resumeUrl: "https://docs.google.com/document/d/1GOvXrkIbdPMktSYSRjwONh4oP1mhQjbx15xD3PGaSF4/edit?usp=sharing",
   socials: [
     { icon: Github, href: "https://github.com/alamayub/", label: "GitHub" },
