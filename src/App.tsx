@@ -6,6 +6,7 @@ import { motion, useScroll, useSpring } from 'motion/react';
 
 // Lazy load sections for better initial performance
 const About = lazy(() => import('./components/About').then(module => ({ default: module.About })));
+const GithubStats = lazy(() => import('./components/GithubStats').then(module => ({ default: module.GithubStats })));
 const TechStack = lazy(() => import('./components/TechStack').then(module => ({ default: module.TechStack })));
 const Projects = lazy(() => import('./components/Projects').then(module => ({ default: module.Projects })));
 const Experience = lazy(() => import('./components/Experience').then(module => ({ default: module.Experience })));
@@ -78,6 +79,11 @@ export default function App() {
         <Hero />
         <Suspense fallback={<SectionLoader />}>
           <About />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <div className="max-w-7xl mx-auto px-6">
+            <GithubStats />
+          </div>
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <TechStack />
