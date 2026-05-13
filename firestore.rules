@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwnerEmail(email) {
+      return isSignedIn() && request.auth.token.email == email && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Validation for ContactMessage
+    function isValidContactMessage(data) {
+      return data.keys().hasAll(['name', 'email', 'projectType', 'message', 'createdAt'])
+        && data.keys().size() == 5
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 100
+        && data.email is string && data.email.size() > 0 && data.email.size() <= 100
+        && data.projectType is string && data.projectType.size() > 0 && data.projectType.size() <= 50
+        && data.message is string && data.message.size() > 0 && data.message.size() <= 2000
+        && data.createdAt == request.time;
+    }
+
+    match /contacts/{messageId} {
+      // Anyone can send a message
+      allow create: if isValidId(messageId) && isValidContactMessage(incoming());
+
+      // Only the portfolio owner can read the messages
+      // Hardcoding the email as requested for "only me" access
+      allow read, list: if isOwnerEmail('alamayub85@gmail.com');
+
+      // No updates or deletes allowed for security
+      allow update, delete: if false;
+    }
+  }
+}

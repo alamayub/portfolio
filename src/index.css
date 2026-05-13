@@ -1,0 +1,88 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    @apply bg-neutral-50 text-neutral-900 selection:bg-indigo-500/30 selection:text-indigo-600 transition-colors duration-300;
+  }
+  
+  .dark body {
+    @apply bg-neutral-950 text-neutral-50;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 dark:bg-neutral-950/80 backdrop-blur-xl border border-neutral-200 dark:border-white/10 shadow-sm transition-all duration-300;
+  }
+  
+  .glass-card {
+    @apply relative overflow-hidden bg-white/80 dark:bg-neutral-900/40 backdrop-blur-md border border-neutral-200 dark:border-white/10 rounded-2xl shadow-lg transition-all duration-300;
+  }
+
+  .mesh-gradient {
+    background-color: hsla(0,0%,100%,1);
+    background-image:
+      radial-gradient(at 40% 20%, hsla(228,100%,74%,1) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);
+  }
+
+  .dark .mesh-gradient {
+    background-color: hsla(240,10%,3%,1);
+    background-image:
+      radial-gradient(at 40% 20%, hsla(240,40%,10%,1) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(240,40%,10%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(240,40%,10%,1) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, hsla(240,40%,10%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(240,40%,10%,1) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, hsla(240,40%,10%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 0%, hsla(240,40%,10%,1) 0px, transparent 50%);
+  }
+  
+  .glow-indigo {
+    @apply shadow-[0_0_20px_-5px_rgba(99,102,241,0.2)];
+  }
+  
+  .dark .glow-indigo {
+    @apply shadow-[0_0_20px_-5px_rgba(99,102,241,0.5)];
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px rgba(99,102,241,0.2);
+  }
+
+  .dark .text-glow {
+    text-shadow: 0 0 10px rgba(99,102,241,0.3);
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(1deg); }
+  66% { transform: translateY(5px) rotate(-1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
