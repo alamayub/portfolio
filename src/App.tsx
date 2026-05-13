@@ -1,8 +1,10 @@
 import { useEffect, Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Skeleton } from './components/ui';
 import { motion, useScroll, useSpring } from 'motion/react';
+import { AdminPortal } from './components/AdminPortal';
 
 // Lazy load sections for better initial performance
 const About = lazy(() => import('./components/About').then(module => ({ default: module.About })));
@@ -39,7 +41,7 @@ function SectionLoader() {
   );
 }
 
-export default function App() {
+function Portfolio() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -49,20 +51,25 @@ export default function App() {
 
   useEffect(() => {
     // Smooth scroll behavior
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click',  (e) => {
+    const handleSmoothScroll = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a[href^="#"]');
+      if (anchor) {
         e.preventDefault();
         const href = anchor.getAttribute('href');
         if (href) {
-          const target = document.querySelector(href);
-          if (target) {
-            target.scrollIntoView({
+          const targetEl = document.querySelector(href);
+          if (targetEl) {
+            targetEl.scrollIntoView({
               behavior: 'smooth'
             });
           }
         }
-      });
-    });
+      }
+    };
+
+    document.addEventListener('click', handleSmoothScroll);
+    return () => document.removeEventListener('click', handleSmoothScroll);
   }, []);
 
   return (
@@ -112,5 +119,17 @@ export default function App() {
       <div className="fixed bottom-0 right-0 w-[50vw] h-[50vw] bg-indigo-600/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
       <div className="fixed top-0 left-0 w-[50vw] h-[50vw] bg-purple-600/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Portfolio />} />
+        <Route path="/admin" element={<AdminPortal />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

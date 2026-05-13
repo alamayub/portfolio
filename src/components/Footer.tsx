@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { Section, SectionHeader, GlassCard, Badge } from './ui';
 import { ROADMAP, SERVICES, PERSONAL_INFO } from '../constants/portfolio';
-import { Send, MapPin, Mail, Sparkles, Loader2, CheckCircle } from 'lucide-react';
+import { Send, MapPin, Mail, Sparkles, Loader2, CheckCircle, Shield } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
@@ -42,7 +43,7 @@ export function RoadmapSocial() {
         <div>
           <SectionHeader title="The Roadmap" align="left" subtitle="A strategic outlook on my engineering evolution and upcoming technical goals." />
           <div className="grid grid-cols-1 gap-4">
-            {ROADMAP.map((item, i) => (
+            {ROADMAP.map((item: any, i: number) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -20 }}
@@ -70,7 +71,7 @@ export function RoadmapSocial() {
         <div>
           <SectionHeader title="Expert Services" align="left" subtitle="Turning complex architectural challenges into elegant, production-ready software solutions." />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {SERVICES.map((service, i) => (
+            {SERVICES.map((service: any, i: number) => (
               <motion.div 
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -309,7 +310,7 @@ export function Footer() {
           </div>
 
           <div className="flex gap-4">
-            {PERSONAL_INFO.socials.map((social, idx) => (
+            {PERSONAL_INFO.socials.map((social: any, idx: number) => (
               <a 
                 key={idx} 
                 href={social.href} 
@@ -328,9 +329,19 @@ export function Footer() {
           <p className="text-neutral-400 dark:text-neutral-500 text-xs font-bold uppercase tracking-[0.3em]">
             &copy; {new Date().getFullYear()} {PERSONAL_INFO.name} // Engineered for perfection
           </p>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">System Online</span>
+          <div className="flex items-center gap-6">
+            <Link 
+              to="/admin" 
+              className="group flex items-center gap-2 opacity-20 hover:opacity-100 transition-all duration-500"
+              title="Staff Access"
+            >
+              <Shield size={10} className="text-neutral-500 group-hover:text-indigo-500 transition-colors" />
+              <span className="text-[8px] font-black uppercase tracking-[0.4em] text-neutral-600 group-hover:text-neutral-400">STAFF</span>
+            </Link>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">System Online</span>
+            </div>
           </div>
         </div>
       </div>

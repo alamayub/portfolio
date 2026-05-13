@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { motion } from 'motion/react';
 import { cn } from '../../lib/utils';
@@ -86,6 +85,7 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   hover?: boolean;
+  [key: string]: any;
 }
 
 export function GlassCard({ children, className, hover = true, ...props }: GlassCardProps) {

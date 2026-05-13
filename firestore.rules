@@ -12,7 +12,9 @@ service cloud.firestore {
     }
 
     function isOwnerEmail(email) {
-      return isSignedIn() && request.auth.token.email == email && request.auth.token.email_verified == true;
+      return isSignedIn() 
+        && request.auth.token.email == email 
+        && request.auth.token.email_verified == true;
     }
 
     function isValidId(id) {
@@ -21,6 +23,10 @@ service cloud.firestore {
 
     function incoming() {
       return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
     }
 
     // Validation for ContactMessage
@@ -35,15 +41,11 @@ service cloud.firestore {
     }
 
     match /contacts/{messageId} {
-      // Anyone can send a message
+      // Anyone can create a contact form submission
       allow create: if isValidId(messageId) && isValidContactMessage(incoming());
 
-      // Only the portfolio owner can read the messages
-      // Hardcoding the email as requested for "only me" access
-      allow read, list: if isOwnerEmail('alamayub85@gmail.com');
-
-      // No updates or deletes allowed for security
-      allow update, delete: if false;
+      // Only the owner can read, list, update or delete
+      allow read, list, update, delete: if isOwnerEmail('imayubalam@gmail.com');
     }
   }
 }
