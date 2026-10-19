@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+
+# Host and Sitemap
+Host: https://ayub.pages.dev
+Sitemap: https://ayub.pages.dev/sitemap.xml
+

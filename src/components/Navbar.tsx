@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { PERSONAL_INFO } from '../constants/portfolio';
 import { cn } from '../lib/utils';
@@ -11,7 +12,6 @@ export function Navbar() {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('theme');
       if (saved) return saved === 'dark';
-      // Fallback to light as default requested
       return false;
     }
     return false;
@@ -23,7 +23,7 @@ export function Navbar() {
     const handleScroll = () => {
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       const currentScroll = window.scrollY;
-      setScrollProgress((currentScroll / totalScroll) * 100);
+      setScrollProgress(totalScroll > 0 ? (currentScroll / totalScroll) * 100 : 0);
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -44,12 +44,13 @@ export function Navbar() {
   const toggleTheme = () => setIsDark(!isDark);
 
   const navLinks = [
-    { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    { label: "Projects", href: "#projects" },
-    { label: "Experience", href: "#experience" },
-    { label: "Education", href: "#learning" },
-    { label: "Contact", href: "#contact" }
+    { label: "Home", path: "/" },
+    { label: "About", path: "/about" },
+    { label: "Skills", path: "/skills" },
+    { label: "Projects", path: "/projects" },
+    { label: "Experience", path: "/experience" },
+    { label: "Education", path: "/education" },
+    { label: "Contact", path: "/contact" }
   ];
 
   return (
@@ -64,22 +65,45 @@ export function Navbar() {
       )}
     >
       {/* Scroll Progress Indicator */}
-      <div className="absolute top-0 left-0 h-[3px] bg-indigo-500 z-[60] transition-all duration-100" style={{ width: `${scrollProgress}%` }} />
+      <div 
+        className="absolute top-0 left-0 h-[3px] bg-indigo-500 z-[60] transition-all duration-100" 
+        style={{ width: `${scrollProgress}%` }} 
+      />
+
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <a href="#" className="text-3xl font-black tracking-tighter text-neutral-900 dark:text-white group">
+        <Link to="/" className="text-3xl font-black tracking-tighter text-neutral-900 dark:text-white group">
           AYUB<span className="text-indigo-500 group-hover:animate-pulse">.</span>
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-10">
+        <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
           {navLinks.map((link) => (
-            <a
+            <NavLink
               key={link.label}
-              href={link.href}
-              className="text-xs font-black uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400 hover:text-indigo-600 dark:hover:text-white transition-all hover:-translate-y-0.5"
+              to={link.path}
+              end={link.path === '/'}
+              className={({ isActive }) =>
+                cn(
+                  "text-xs font-black uppercase tracking-[0.2em] transition-all hover:-translate-y-0.5 relative py-1",
+                  isActive
+                    ? "text-indigo-600 dark:text-indigo-400 font-black"
+                    : "text-neutral-500 dark:text-neutral-400 hover:text-indigo-600 dark:hover:text-white"
+                )
+              }
             >
-              {link.label}
-            </a>
+              {({ isActive }) => (
+                <>
+                  {link.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNavIndicator"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-indigo-500 rounded-full"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </>
+              )}
+            </NavLink>
           ))}
           
           <button 
@@ -90,14 +114,12 @@ export function Navbar() {
             {isDark ? <Sun size={20} strokeWidth={2.5} /> : <Moon size={20} strokeWidth={2.5} />}
           </button>
 
-          <motion.a
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 rounded-[1.2rem] text-sm font-black uppercase tracking-widest hover:bg-indigo-600 dark:hover:bg-indigo-500 dark:hover:text-white transition-all duration-300 shadow-xl"
+          <Link
+            to="/contact"
+            className="px-6 py-2.5 bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 rounded-[1.2rem] text-xs font-black uppercase tracking-widest hover:bg-indigo-600 dark:hover:bg-indigo-500 dark:hover:text-white transition-all duration-300 shadow-xl"
           >
             Hire Me
-          </motion.a>
+          </Link>
         </div>
 
         {/* Mobile Toggle */}
@@ -112,6 +134,7 @@ export function Navbar() {
           <button 
             className="p-2.5 text-neutral-900 dark:text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -129,14 +152,22 @@ export function Navbar() {
           >
             <div className="flex flex-col p-6 space-y-4">
               {navLinks.map((link) => (
-                <a
+                <NavLink
                   key={link.label}
-                  href={link.href}
+                  to={link.path}
+                  end={link.path === '/'}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-lg font-medium text-neutral-700 dark:text-neutral-300 hover:text-indigo-600 dark:hover:text-white"
+                  className={({ isActive }) =>
+                    cn(
+                      "text-base font-bold uppercase tracking-wider transition-colors",
+                      isActive
+                        ? "text-indigo-600 dark:text-indigo-400 font-extrabold"
+                        : "text-neutral-700 dark:text-neutral-300 hover:text-indigo-600 dark:hover:text-white"
+                    )
+                  }
                 >
                   {link.label}
-                </a>
+                </NavLink>
               ))}
               <hr className="border-neutral-200 dark:border-white/10" />
               <div className="flex space-x-4">
@@ -147,6 +178,7 @@ export function Navbar() {
                     className="text-neutral-500 dark:text-neutral-400 hover:text-indigo-600 dark:hover:text-white"
                     target="_blank"
                     rel="noreferrer"
+                    aria-label={social.label}
                   >
                     <social.icon size={20} />
                   </a>

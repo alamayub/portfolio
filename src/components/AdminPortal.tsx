@@ -18,10 +18,13 @@ import {
   Calendar, 
   MessageSquare, 
   ShieldCheck,
-  X
+  X,
+  ArrowLeft
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { GlassCard, Badge } from './ui';
 import { ContactTable, Contact } from './ContactTable';
+import { SEO } from './SEO';
 
 export function AdminPortal() {
   const [user, setUser] = useState<User | null>(null);
@@ -103,6 +106,7 @@ export function AdminPortal() {
   if (!user || !ADMIN_EMAIL.includes(user.email ?? '')) {
     return (
       <div className="min-h-screen bg-neutral-950 flex items-center justify-center p-6">
+        <SEO title="Admin Access Control" noIndex={true} />
         <GlassCard className="max-w-md w-full p-10 text-center border-indigo-500/20">
           <div className="w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8">
             <ShieldCheck className="text-indigo-500" size={40} />
@@ -118,6 +122,14 @@ export function AdminPortal() {
             Sign in with Google
           </button>
           {error && <p className="mt-4 text-red-500 text-sm font-bold">{error}</p>}
+          <div className="mt-6">
+            <Link 
+              to="/" 
+              className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-neutral-400 hover:text-white transition-colors"
+            >
+              <ArrowLeft size={14} /> Back to Portfolio
+            </Link>
+          </div>
         </GlassCard>
       </div>
     );
@@ -125,6 +137,7 @@ export function AdminPortal() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white p-6 md:p-12">
+      <SEO title="Admin Control Center" noIndex={true} />
       <div className="max-w-7xl mx-auto">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           <div>
@@ -136,6 +149,12 @@ export function AdminPortal() {
           </div>
           
           <div className="flex items-center gap-4">
+            <Link 
+              to="/" 
+              className="px-4 py-3 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all text-xs font-black uppercase tracking-widest flex items-center gap-2 text-neutral-300 hover:text-white"
+            >
+              <ArrowLeft size={16} /> Back
+            </Link>
             <div className="hidden md:block text-right mr-4">
               <p className="text-sm font-black">{user.displayName}</p>
               <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold">{user.email}</p>

@@ -46,7 +46,7 @@ export function Testimonials() {
                   <p className="text-lg text-neutral-900 dark:text-white font-black leading-none mb-2">{t.author}</p>
                   <div className="flex items-center gap-2">
                     <span className="w-6 h-0.5 bg-indigo-500/50" />
-                    <p className="text-[10px] text-neutral-400 font-black uppercase tracking-[0.2em]">Verified Partner</p>
+                    <p className="text-[10px] text-neutral-400 font-black uppercase tracking-[0.2em]">{t.role || 'Verified Partner'}</p>
                   </div>
                 </div>
               </div>

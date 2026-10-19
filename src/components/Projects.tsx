@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Section, SectionHeader, GlassCard, Badge, Image } from './ui';
 import { PROJECTS } from '../constants/portfolio';
-import { Github, ExternalLink, ArrowRight, X, Layers, Zap, Info } from 'lucide-react';
+import { Github, ExternalLink, ArrowRight, X, Layers, Zap, Info, Search } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export function Projects() {
   const [selectedProject, setSelectedProject] = useState<typeof PROJECTS[0] | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
   const [activeTech, setActiveTech] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     if (selectedProject) {
@@ -31,21 +32,45 @@ export function Projects() {
   const filteredProjects = PROJECTS.filter(project => {
     const categoryMatch = activeCategory === 'All' || project.category === activeCategory;
     const techMatch = activeTech === 'All' || project.tech.includes(activeTech);
-    return categoryMatch && techMatch;
+    const query = searchQuery.trim().toLowerCase();
+    const searchMatch = !query || 
+      project.title.toLowerCase().includes(query) ||
+      project.description.toLowerCase().includes(query) ||
+      project.features.some(f => f.toLowerCase().includes(query)) ||
+      project.tech.some(t => t.toLowerCase().includes(query));
+    return categoryMatch && techMatch && searchMatch;
   });
 
   return (
     <Section id="projects">
       <div className="flex justify-center mb-6">
-        <Badge variant="indigo">Portfolio</Badge>
+        <Badge variant="indigo">Portfolio ({PROJECTS.length} Projects)</Badge>
       </div>
       <SectionHeader 
         title="Featured Works" 
         subtitle="Exploring the intersections of AI, real-time data, and mobile excellence through high-impact engineering."
       />
 
-      {/* Filters */}
+      {/* Search & Filters */}
       <div className="flex flex-col gap-6 mb-12">
+        <div className="relative max-w-md mx-auto w-full">
+          <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
+          <input
+            type="text"
+            placeholder="Search by keyword, tech, or feature..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-11 pr-10 py-3 bg-white dark:bg-white/5 border border-neutral-200 dark:border-white/10 rounded-2xl text-sm font-medium text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 mr-2">Category:</span>
           {categories.map((cat) => (
@@ -143,8 +168,29 @@ export function Projects() {
             </GlassCard>
           </motion.div>
         ))}
-      </AnimatePresence>
-    </motion.div>
+        </AnimatePresence>
+      </motion.div>
+
+      {filteredProjects.length === 0 && (
+        <div className="py-16 text-center">
+          <GlassCard className="max-w-md mx-auto p-8 border-indigo-500/20">
+            <p className="text-lg font-black text-neutral-900 dark:text-white mb-2">No projects match your filter</p>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-6 font-medium">
+              Try clearing your search terms or selecting a different category.
+            </p>
+            <button
+              onClick={() => {
+                setActiveCategory('All');
+                setActiveTech('All');
+                setSearchQuery('');
+              }}
+              className="px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-md"
+            >
+              Reset All Filters
+            </button>
+          </GlassCard>
+        </div>
+      )}
 
       {/* Project Detail Modal */}
       <AnimatePresence>

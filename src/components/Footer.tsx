@@ -51,16 +51,23 @@ export function RoadmapSocial() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <GlassCard className="flex items-center justify-between py-5 px-6 border-transparent hover:border-indigo-500/20 group" hover={false}>
-                  <div className="flex items-center gap-5">
-                    <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-black text-xs group-hover:scale-110 transition-transform">
-                      0{i + 1}
+                <GlassCard className="flex flex-col py-5 px-6 border-transparent hover:border-indigo-500/20 group" hover={false}>
+                  <div className="flex items-center justify-between gap-4 mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-black text-xs group-hover:scale-110 transition-transform shrink-0">
+                        0{i + 1}
+                      </div>
+                      <span className="text-neutral-800 dark:text-neutral-200 font-bold text-base leading-snug">{item.goal}</span>
                     </div>
-                    <span className="text-neutral-800 dark:text-neutral-200 font-bold text-lg">{item.goal}</span>
+                    <Badge variant={item.status === 'Active Focus' || item.status === 'In Progress' ? 'indigo' : 'default'} className="px-2.5 py-0.5 text-[10px] shrink-0">
+                      {item.status}
+                    </Badge>
                   </div>
-                  <Badge variant={item.status === 'In Progress' ? 'indigo' : 'default'} className="px-3 py-1">
-                    {item.status}
-                  </Badge>
+                  {item.desc && (
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400 font-medium pl-11 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  )}
                 </GlassCard>
               </motion.div>
             ))}
@@ -293,19 +300,19 @@ export function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-12 mb-16">
           <div className="text-center md:text-left">
-            <a href="#" className="text-4xl font-black tracking-tighter text-neutral-900 dark:text-white mb-4 block">
+            <Link to="/" className="text-4xl font-black tracking-tighter text-neutral-900 dark:text-white mb-4 block">
               AYUB<span className="text-indigo-500">.</span>
-            </a>
+            </Link>
             <p className="text-neutral-500 dark:text-neutral-400 text-lg font-semibold max-w-sm leading-relaxed mx-auto md:mx-0">
               Forging the future of software with precision and purpose.
             </p>
           </div>
           
-          <div className="flex flex-wrap justify-center gap-10 text-neutral-600 dark:text-neutral-400 text-sm font-black uppercase tracking-widest">
-            {['About', 'Skills', 'Projects', 'Experience', 'Contact'].map(link => (
-              <a key={link} href={`#${link.toLowerCase()}`} className="hover:text-indigo-600 dark:hover:text-white transition-all hover:-translate-y-1">
+          <div className="flex flex-wrap justify-center gap-8 text-neutral-600 dark:text-neutral-400 text-sm font-black uppercase tracking-widest">
+            {['About', 'Skills', 'Projects', 'Experience', 'Education', 'Contact'].map(link => (
+              <Link key={link} to={`/${link.toLowerCase()}`} className="hover:text-indigo-600 dark:hover:text-white transition-all hover:-translate-y-1">
                 {link}
-              </a>
+              </Link>
             ))}
           </div>
 

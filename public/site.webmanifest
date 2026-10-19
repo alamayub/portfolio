@@ -1,0 +1,17 @@
+{
+  "name": "Ayub Alam - Senior Full-Stack Software Engineer",
+  "short_name": "Ayub Alam",
+  "description": "Portfolio of Ayub Alam - Senior Full-Stack Engineer specializing in Flutter, React, Tauri, Node.js, and AI-powered systems.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
+

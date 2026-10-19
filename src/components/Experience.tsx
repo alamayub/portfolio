@@ -73,22 +73,35 @@ export function Experience() {
                     {exp.desc}
                   </p>
 
-                  <div className="grid grid-cols-1 gap-3">
-                    {exp.highlights.map((h, i) => (
-                      <motion.div 
-                        key={i} 
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 + i * 0.1 }}
-                        className="flex items-start gap-3 p-3 bg-neutral-50 dark:bg-white/5 rounded-xl border border-neutral-100 dark:border-white/5 hover:border-indigo-500/20 transition-all group/item"
-                      >
-                        <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 shrink-0 group-hover/item:scale-150 transition-transform" />
-                        <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">{h}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </GlassCard>
+                    <div className="grid grid-cols-1 gap-3">
+                      {exp.highlights.map((h, i) => (
+                        <motion.div 
+                          key={i} 
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.3 + i * 0.1 }}
+                          className="flex items-start gap-3 p-3 bg-neutral-50 dark:bg-white/5 rounded-xl border border-neutral-100 dark:border-white/5 hover:border-indigo-500/20 transition-all group/item"
+                        >
+                          <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 shrink-0 group-hover/item:scale-150 transition-transform" />
+                          <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">{h}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {exp.tech && (
+                      <div className="flex flex-wrap gap-1.5 mt-6 pt-6 border-t border-neutral-100 dark:border-white/5">
+                        {exp.tech.map((t: string, idx: number) => (
+                          <span 
+                            key={idx} 
+                            className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </GlassCard>
               </div>
               <div className="hidden md:block w-[45%]" />
             </motion.div>

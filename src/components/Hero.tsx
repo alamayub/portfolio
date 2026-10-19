@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Download } from 'lucide-react';
 import { PERSONAL_INFO } from '../constants/portfolio';
 
@@ -11,6 +12,35 @@ export function Hero() {
   const blob1Y = useTransform(scrollY, [0, 1000], [0, 100]);
   const blob2Y = useTransform(scrollY, [0, 1000], [0, -200]);
   const gridY = useTransform(scrollY, [0, 1000], [0, -50]);
+
+  // Typewriter effect for name
+  const fullName = PERSONAL_INFO.name;
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting && displayText === fullName) {
+      // Completed typing name, pause before deleting
+      timeout = setTimeout(() => setIsDeleting(true), 3000);
+    } else if (isDeleting && displayText === '') {
+      // Finished deleting, brief pause before retyping
+      timeout = setTimeout(() => setIsDeleting(false), 500);
+    } else {
+      // Speed is faster when backspacing
+      const speed = isDeleting ? 70 : 130;
+      timeout = setTimeout(() => {
+        setDisplayText(prev =>
+          isDeleting
+            ? fullName.substring(0, prev.length - 1)
+            : fullName.substring(0, prev.length + 1)
+        );
+      }, speed);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, fullName]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
@@ -49,9 +79,22 @@ export function Hero() {
             Available for new opportunities
           </motion.div>
           
-          <h1 className="text-6xl sm:text-7xl md:text-9xl font-black tracking-tight text-neutral-900 dark:text-white mb-8 leading-[0.95]">
-            I'm <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 dark:from-indigo-400 dark:via-cyan-400 dark:to-indigo-300">{PERSONAL_INFO.name}</span>,
-            <br /><span className="opacity-90">a {PERSONAL_INFO.role}.</span>
+          <h1 
+            aria-label={`I'm ${PERSONAL_INFO.name}, a ${PERSONAL_INFO.role}.`}
+            className="text-6xl sm:text-7xl md:text-9xl font-black tracking-tight text-neutral-900 dark:text-white mb-8 leading-[0.95]"
+          >
+            I'm{" "}
+            <span className="relative inline-flex items-baseline" aria-hidden="true">
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 dark:from-indigo-400 dark:via-cyan-400 dark:to-indigo-300 min-h-[1em]">
+                {displayText || '\u00A0'}
+              </span>
+              <span 
+                className="inline-block w-[3px] sm:w-[5px] md:w-[7px] h-[0.78em] bg-indigo-500 dark:bg-indigo-400 ml-1.5 align-middle rounded-full animate-pulse shadow-[0_0_12px_rgba(99,102,241,0.8)]"
+              />
+            </span>
+            <span className="sr-only">{PERSONAL_INFO.name}</span>,
+            <br />
+            <span className="opacity-90">a {PERSONAL_INFO.role}.</span>
           </h1>
 
           <p className="text-xl md:text-2xl font-medium text-neutral-600 dark:text-neutral-400 max-w-4xl mx-auto mb-12 opacity-80 leading-relaxed">
@@ -59,15 +102,15 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-16">
-            <motion.a 
-              href="#projects" 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="group w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg flex items-center justify-center gap-2 hover:bg-indigo-700 transition-all duration-300 glow-indigo"
-            >
-              Explore Projects
-              <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
-            </motion.a>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
+              <Link 
+                to="/projects" 
+                className="group w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg flex items-center justify-center gap-2 hover:bg-indigo-700 transition-all duration-300 glow-indigo"
+              >
+                Explore Projects
+                <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
             <motion.a 
               href={PERSONAL_INFO.resumeUrl}
               whileHover={{ scale: 1.05 }}
